@@ -1,5 +1,6 @@
 # from main import app
 # from apps import create_app
+import os
 from flask import Flask
 from datetime import timedelta
 from flask_session import Session
@@ -61,6 +62,8 @@ app = flask_app()
 
 
 if __name__ == "__main__":
+
+    port = int(os.getenv('PORT'))
     # app.run(debug=True)
     app.run()
     # app.run(host="0.0.0.0", port=5000, threaded=True)
