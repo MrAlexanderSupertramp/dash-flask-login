@@ -20,6 +20,7 @@ from extensions import mail
 from apps.authentication.models import User
 
 
+
 # mail = Mail()
 
 def flask_app():
