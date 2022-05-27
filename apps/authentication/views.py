@@ -6,11 +6,11 @@ from flask import request, Response, session, url_for, redirect, render_template
 from functools import wraps
 from datetime import timedelta, date, datetime
 from datetime import datetime
-from main.database import db
+from database import db
 from flask_session import Session
 from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Message, Mail
-from main.extensions import mail
+from extensions import mail
 from random import randrange
 import threading
 

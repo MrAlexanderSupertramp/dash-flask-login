@@ -1,0 +1,106 @@
+{% extends 'authentication/master_auth.html' %}
+
+
+
+{% block auth_head_block %}
+
+    <title>Sing-In | DASH</title>
+
+{% endblock %}
+
+
+{% block auth_page_content %}
+
+    <div class="form-container">
+        <div class="form-form">
+            <div class="form-form-wrap">
+                <div class="form-container">
+                    <div class="form-content">
+
+                        <h1 class="" style="padding-bottom: 50px; padding-top: 50px;">Log In to <a href="#"><span class="brand-name">DASH</span></a></h1>
+
+                        <!-- message -->
+                        <div style="height: 50px; padding-bottom: 80px;">
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                                {% if messages %}
+                                    {% for category, message in messages %}
+                                        {% if category == 'error' %}
+                                            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert" style="margin: 10px 20px;">
+                                                <strong> {{ message }} </strong>
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        {% elif category == 'success' %}
+                                            <div class="alert alert-success alert-dismissible fade show text-center" role="alert" style="margin: 10px 20px;">
+                                                <strong> {{message}} </strong>
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+
+
+                        <form action="{{ url_for('authentication.signin') }}" method="post" enctype="multipart/form-data" class="form">
+
+                            <div class="text-left">
+
+                                <div id="username-field" class="field-wrapper input">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    <input id="email" name="email" type="text" class="form-control" placeholder="Email" required>
+                                </div>
+
+                                <div id="password-field" class="field-wrapper input mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                    <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
+                                </div>
+
+                                <div class="d-sm-flex justify-content-between">
+                                    <div class="field-wrapper toggle-pass">
+                                        <p class="d-inline-block">Show Password</p>
+                                        <label class="switch s-primary">
+                                            <input type="checkbox" id="toggle-password" class="d-none">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                    <div class="field-wrapper">
+                                        <button type="submit" class="btn btn-primary" value="">Log In</button>
+                                    </div>
+                                </div>
+
+                                <div class="field-wrapper text-center keep-logged-in">
+                                    <div class="n-chk new-checkbox checkbox-outline-primary">
+                                        <label class="new-control new-checkbox checkbox-outline-primary">
+                                          <input type="checkbox" class="new-control-input">
+                                          <span class="new-control-indicator"></span>Keep me logged in
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="field-wrapper">
+                                    <a href="#" class="forgot-pass-link">Forgot Password?</a>
+                                </div> -->
+
+                            </div>
+                        </form>    
+
+                        <p class="signup-link" style="margin-bottom: 10px; margin-top: 70px;">Don't have an account ? <a href="{{ url_for('authentication.signup') }}">Sign Up</a></p>
+                        <p class="signup-link" style="margin-bottom: 10px;">Account not activated? <a href="{{ url_for('authentication.activation_init') }}">Activate Account</a></p>
+                        <p class="signup-link">Can't remember password? <a href="{{ url_for('authentication.forgot_password_init') }}">Forgot Password</a></p>
+
+                        <p class="terms-conditions">© 2022 All Rights Reserved. <a href="#">DASH</a>.</p>
+
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <div class="form-image">
+            <div class="l-image" style="background-image: url({{ url_for('static', filename='back/assets/img/signin_1.jpg') }});"></div>
+        </div>
+    </div>
+          
+{% endblock %}   

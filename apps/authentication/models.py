@@ -1,5 +1,5 @@
 from enum import unique
-from main.database import db
+from database import db
 from flask_login import UserMixin
 import datetime
 
