@@ -6,8 +6,9 @@ class Config(object):
     SECRET_KEY = '57e19ea558d4967a552d03deece34a70'
     SQLALCHEMY_DATABASE_URI="sqlite:///database.db"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI="sqlite:///database.db"
     SESSION_SQLALCHEMY_TABLE = 'sessions'
+    SESSION_TIMEOUT = 60*60*24*30   # 30 days : seconds*minutes*hours*days
+    TOKEN_TIMEOUT = 60*30          # 30 minutes : seconds*minutes
     TIMEZONE = 'Asia/Kolkata'
     MAIL_SERVER = "mail.krioskcreata.com"  
     MAIL_PORT = 2525

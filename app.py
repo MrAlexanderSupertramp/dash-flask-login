@@ -27,7 +27,7 @@ def flask_app():
 
     # create flask-app
     app = Flask(__name__)
-    app.config.from_object('config.DevelopmentConfig')
+    app.config.from_object('config.ProductionConfig')
 
 
     # initialize database by giving it flask app
@@ -38,7 +38,7 @@ def flask_app():
     app.config['SESSION_SQLALCHEMY_TABLE'] = "sessions"
     app.config['SESSION_SQLALCHEMY'] = db
     app.config['SESSION_PERMANENT'] = True
-    app.permanent_session_lifetime = timedelta(seconds=1500)
+    app.permanent_session_lifetime = timedelta(seconds=1200)
 
     # sess = Session()
     # sess.init_app(app)

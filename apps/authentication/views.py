@@ -5,7 +5,6 @@ from apps.admin import admin
 from flask import request, Response, session, url_for, redirect, render_template, flash, g
 from functools import wraps
 from datetime import timedelta, date, datetime
-from datetime import datetime
 from database import db
 from flask_session import Session
 from itsdangerous import URLSafeTimedSerializer
@@ -13,6 +12,7 @@ from flask_mail import Message, Mail
 from extensions import mail
 from random import randrange
 import threading
+import config
 
 # model import
 from .models import User
@@ -35,7 +35,7 @@ def check_authentication(f) :
             flash("Email is not verified.", category="error")
             return redirect(url_for('authentication.activation_init'))
 
-        # make user available down the pipeline via flask.g
+        # fixing user as global object into context : make user available down the pipeline via flask.g
         g.user = user
 
         # finally call f. f() now haves access to g.user
@@ -48,15 +48,15 @@ def check_authentication(f) :
 # task-worker : mail
 def task_mail(msg) :
 
-    mail.send(msg)
+    try :
+        # send email
+        mail.send(msg)
 
-    # print the current thread
-    # print(threading.current_thread().name)
-
-    # try :
-    # except :
-    #     flash("Its not you, its us. Our mail-servers are facing issues.", category="error")
-    #     return redirect(url_for('authentication.activation_init'))
+        # print the current thread
+        # print(threading.current_thread().name)
+    except :
+        flash("Its not you, its us. Our mail-servers are facing issues.", category="error")
+        return redirect(url_for('authentication.activation_init'))
 
 
 
@@ -103,6 +103,7 @@ def signup():
         return redirect(url_for('authentication.activation_end', email=email))
 
     return render_template("authentication/sign_up.html")
+
 
 
 
@@ -168,6 +169,16 @@ def activation_end():
 
         if user.token :
             if user.token == token :
+
+                try :
+                    if ((datetime.today() - user.token_age) > timedelta(seconds=config.Config.TOKEN_TIMEOUT)) == True :
+                        flash("The token has been expired.", category="error")
+                        return redirect(url_for('authentication.forgot_password_init'))
+
+                except :
+                    flash("Its not you, its us. Please try again.", category="error")
+                    return redirect(url_for('authentication.forgot_password_init'))
+
                 user.is_verified = True
                 db.session.commit()
 
@@ -236,6 +247,7 @@ def signin():
 
 
 
+
 # forgot password
 @authentication.route("/forgot-password-init", methods=["GET", "POST"])
 def forgot_password_init():
@@ -300,6 +312,18 @@ def forgot_password_end():
         
         if user.token :
             if user.token == token :
+
+                try :
+
+                    if ((datetime.today() - user.token_age) > timedelta(seconds=config.Config.TOKEN_TIMEOUT)) == True :
+                        flash("The token has been expired.", category="error")
+                        return redirect(url_for('authentication.forgot_password_init'))
+
+                except :
+                    flash("Its not you, its us. Please try again.", category="error")
+                    return redirect(url_for('authentication.forgot_password_init'))
+
+
                 user.password = password
                 db.session.commit()
 
@@ -327,13 +351,17 @@ def forgot_password_end():
 
 
 
+
 # sign out
 @authentication.route("/logout")
 def signout():
 
-    session.pop('email', None)
+    try :
+        session.pop('email', None)
 
-    flash("Logged out Successfully.", category="success")
+        flash("Logged out Successfully.", category="success")
+    except :
+        pass
 
     return redirect(url_for('authentication.signin'))
 

@@ -19,30 +19,8 @@
 
                         <h1 class="">Activation <a href="#"><span class="brand-name">Dash</span></a></h1>
 
-                        <!-- message -->
-                        <div style="height: 50px; padding-bottom: 80px;">
-                            {% with messages = get_flashed_messages(with_categories=true) %}
-                                {% if messages %}
-                                    {% for category, message in messages %}
-                                        {% if category == 'error' %}
-                                            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert" style="margin: 10px 20px;">
-                                                <strong> {{ message }} </strong>
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                        {% elif category == 'success' %}
-                                            <div class="alert alert-success alert-dismissible fade show text-center" role="alert" style="margin: 10px 20px;">
-                                                <strong> {{message}} </strong>
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endif %}
-                            {% endwith %}
-                        </div>
+                        <!-- flash message -->
+                        {% include 'components/message_auth.html' %}
 
                         <!-- form -->
                         <form action="#" method="post" enctype="multipart/form-data" class="form">
@@ -82,7 +60,7 @@
             </div>
         </div>
         <div class="form-image">
-            <div class="l-image" style="background-image: url({{ url_for('static', filename='back/assets/img/activation_end.webp') }});">
+            <div class="l-image" style="background-image: url({{ url_for('static', filename='back/assets/img/activation_end.jpg') }});">
             </div>
         </div>
     </div>

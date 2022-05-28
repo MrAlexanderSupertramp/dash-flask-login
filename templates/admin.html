@@ -10,7 +10,15 @@
 
     <body>
 
-        Welcome to the Dash!!!
+        <span style="float: left;">
+            <h1>Welcome to the Dash!!!</h1>
+        </span>
+
+        <span style="float: right;">
+            Want to logout {{ user.username }} ? &nbsp;&nbsp;
+
+            <a href="{{ url_for('authentication.signout') }}"><button>Logout</button></a>
+        </span>
         
     </body>
 
