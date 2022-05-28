@@ -3,7 +3,7 @@ import datetime
 
 class Config(object):
     CSRF_ENABLED = True
-    SECRET_KEY = '57e19ea558d4967a552d03deece34a7000'
+    SECRET_KEY = '57e19ea558d4967a552d03deece34a70'
     SQLALCHEMY_DATABASE_URI="sqlite:///database.db"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SESSION_SQLALCHEMY_TABLE = 'sessions'
